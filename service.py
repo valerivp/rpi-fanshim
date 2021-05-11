@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 #
 # Based on:
-# http://www.philrandal.co.uk/blog/archives/2019/07/entry_214.html 
+# http://www.philrandal.co.uk/blog/archives/2019/07/entry_214.html
 # https://forum-raspberrypi.de/forum/thread/43568-fan-shim-steuern/
 # and:
 # https://github.com/pimoroni/fanshim-python/blob/master/examples/automatic.py
@@ -34,8 +34,8 @@ msgdialogprogress = xbmcgui.DialogProgress()
 
 addon_id = 'service.fanshim'
 selfAddon = xbmcaddon.Addon(addon_id)
-datapath = xbmc.translatePath(selfAddon.getAddonInfo('profile')).decode('utf-8')
-addonfolder = xbmc.translatePath(selfAddon.getAddonInfo('path')).decode('utf-8')
+datapath = xbmc.translatePath(selfAddon.getAddonInfo('profile'))
+addonfolder = xbmc.translatePath(selfAddon.getAddonInfo('path'))
 
 
 
@@ -59,8 +59,8 @@ noled =  selfAddon.getSetting('noled') == 'true'
 
 noled = False
 
-xbmc.log("Fan On :" + str(on_threshold) + " Off " + str(off_threshold),level=xbmc.LOGNOTICE)
-xbmc.log("Delay :" + str(delay) + " Hide Led: " + str(noled) + " Debug : " + str(debug_mode),level=xbmc.LOGNOTICE)
+xbmc.log("Fan On :" + str(on_threshold) + " Off " + str(off_threshold),level=xbmc.LOGINFO)
+xbmc.log("Delay :" + str(delay) + " Hide Led: " + str(noled) + " Debug : " + str(debug_mode),level=xbmc.LOGINFO)
 
 
 
@@ -156,20 +156,20 @@ def set_fan(status):
     GPIO.output(FAN, status)
     fan_enabled = status
     return changed
-    
+
 def watch_temp():
     global fan_enabled
     cpu_temp = get_cpu_temp()
     if debug_mode:
         f = get_cpu_freq()
-        
-        xbmc.log("Fan Status: " + str(fan_enabled) + " temp:" + str(cpu_temp) + " Freq " + str(f) + " %=",level=xbmc.LOGNOTICE)
+
+        xbmc.log("Fan Status: " + str(fan_enabled) + " temp:" + str(cpu_temp) + " Freq " + str(f) + " %=",level=xbmc.LOGINFO)
 
     if fan_enabled == False and cpu_temp >= on_threshold:
-         xbmc.log(str(cpu_temp) + "Enabling fan!" + " temp:" + str(cpu_temp),level=xbmc.LOGNOTICE)
+         xbmc.log(str(cpu_temp) + "Enabling fan!" + " temp:" + str(cpu_temp),level=xbmc.LOGINFO)
          set_fan(True)
     if fan_enabled == True and cpu_temp <= off_threshold:
-         xbmc.log(str(cpu_temp) + " Disabling fan!" + " temp:" + str(cpu_temp),level=xbmc.LOGNOTICE)
+         xbmc.log(str(cpu_temp) + " Disabling fan!" + " temp:" + str(cpu_temp),level=xbmc.LOGINFO)
          set_fan(False)
     return();
 
@@ -191,15 +191,15 @@ def update_led_temperature(temp):
     set_light(r, g, b)
 
 init()
-xbmc.log("Starting FanShim Monitor",level=xbmc.LOGNOTICE)
+xbmc.log("Starting FanShim Monitor",level=xbmc.LOGINFO)
 if __name__ == '__main__':
     monitor = xbmc.Monitor()
-   
+
 while not monitor.abortRequested():
     # Sleep/wait for abort for x seconds
     if monitor.waitForAbort(delay):
             # Abort was requested while waiting. We should exit
-            xbmc.log("Ending FanShim Monitor",level=xbmc.LOGNOTICE)
+            xbmc.log("Ending FanShim Monitor",level=xbmc.LOGINFO)
             break
 
 
@@ -209,5 +209,5 @@ while not monitor.abortRequested():
             t = get_cpu_temp()
             update_led_temperature(t)
 
-   
-xbmc.log("FanShim Closed",level=xbmc.LOGNOTICE)   
+
+xbmc.log("FanShim Closed",level=xbmc.LOGINFO)
