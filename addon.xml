@@ -5,8 +5,8 @@
       provider-name="jane_t">
     <requires>
                 <import addon="xbmc.addon" version="14.0.1"/>
-                <import addon="xbmc.python" version="3.0.0"/>
-                <import addon="virtual.rpi-tools" version="9.80.3.107"/>
+                <import addon="xbmc.python" version="2.1.0"/>
+                <import addon="virtual.rpi-tools" version="9.00.3.107"/>
     </requires>
     <extension point="xbmc.service" library="service.py" start="login"/>
     <extension point="xbmc.addon.metadata">
